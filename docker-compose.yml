@@ -1,0 +1,36 @@
+version: '3'
+services:
+  receptes:
+    container_name: "receptes"
+    image: 'receptes:v1'
+    build: receptes
+    ports:
+      - "80:8080"
+    restart: always
+    networks:
+      - receptesnet
+    depends_on:
+      - receptesdb
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==worker"
+  receptesdb:
+    container_name: "receptesdb"
+    image: 'h2:${H2_TAG}'
+    build:
+      context: ./h2database
+      args:
+        H2_VERSION: ${H2_VERSION}
+    restart: always
+    networks:
+      - receptesnet
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==worker"
+networks:
+  receptesnet:
+    driver: overlay

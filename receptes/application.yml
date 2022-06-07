@@ -1,0 +1,9 @@
+spring:
+  web:
+    locale: ca
+    locale-resolver: fixed
+  datasource:
+    url: "jdbc:h2:tcp://h2database:9082/receptes"
+    username: sa
+    password: sa
+    driverClassName: org.h2.Driver
